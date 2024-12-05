@@ -1,0 +1,68 @@
+/* Estilo para el contenedor principal del formulario */
+.credit-simulation-container {
+    max-width: 600px;
+    margin: 2px auto;
+    padding: 1px 70px;
+    background-color: #4cc1ec;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgb(65, 168, 233);
+  }
+  
+  /* Título del formulario */
+.credit-simulation-title {
+    text-align: center;
+    color: #f7f7f7;
+    margin-bottom: 80px;
+  }
+  
+  /* Estilo para cada campo de entrada */
+.credit-simulation-label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0px;
+    color: #ffffff;
+  }
+  
+.credit-simulation-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 30px;
+    border: 1px solid #ffffff;
+    background-color: #f0f0f0; 
+    color: #333;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 1em;
+  }
+
+.credit-simulation-input::-webkit-inner-spin-button,
+.credit-simulation-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+  
+  /* Estilo para el botón de envío */
+.credit-simulation-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #e00e0e;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-bottom: 15px;
+  }
+  
+.credit-simulation-button:hover {
+    background-color: #45a049;
+  }
+
+  .simulation-section {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }

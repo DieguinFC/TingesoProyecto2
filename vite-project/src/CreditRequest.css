@@ -1,0 +1,70 @@
+/* CreditRegistration.css */
+
+/* Estilo para el contenedor principal */
+.credit-request-container {
+    max-width: 600px;
+    margin: 2px auto;
+    padding: 10px 80px;
+    background-color: #4cc1ec;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgb(65, 168, 233);
+}
+
+/* Título del formulario */
+.credit-request-container h2 {
+    text-align: center;
+    color: #f7f7f7;
+    margin-bottom: 30px;
+}
+
+
+/* Estilos para cada grupo de campos */
+.credit-request-group {
+    margin-bottom: 10px;
+}
+
+/* Etiquetas de cada campo */
+.credit-field-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+/* Inputs y select del formulario */
+.credit-request-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ffffff;
+    background-color: #f0f0f0; 
+    color: #333;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 1em;
+  }
+
+/* Estilo para el botón de envío */
+.credit-registration-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #e81414;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.credit-registration-button:hover {
+    background-color: #45a049;
+}
+
+/* Mensaje de respuesta */
+.credit-registration-message {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 1.1em;
+    color: #333;
+}
