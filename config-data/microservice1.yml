@@ -3,11 +3,7 @@ server:
 
 spring:
   application:
-    name: credit-simulation-service
-  datasource:
-    url: jdbc:postgresql://localhost:5432/credit_simulation_db
-    username: credit_user
-    password: credit_password
+    name: microservice1
   jpa:
     hibernate:
       ddl-auto: update
