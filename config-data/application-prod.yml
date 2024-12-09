@@ -2,11 +2,13 @@ server:
   port: 8080
 
 spring:
-  profiles: prod
+  config:
+    activate:
+      on-profile: prod
   datasource:
     url: jdbc:postgresql://prod-db-server:5432/credit_simulation_db
-    username: prod_user
-    password: prod_password
+    username: postgres
+    password: 123456
 
 eureka:
   client:
