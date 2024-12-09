@@ -5,10 +5,6 @@ spring:
   config:
     activate:
       on-profile: prod
-  datasource:
-    url: jdbc:postgresql://prod-db-server:5432/credit_simulation_db
-    username: postgres
-    password: 123456
 
 eureka:
   client:
