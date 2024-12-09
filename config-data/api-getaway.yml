@@ -1,0 +1,26 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+
+  cloud:
+    gateway:
+      routes:
+        - id: credit-simulation-service
+          uri: lb://credit-simulation-service
+          predicates:
+            - Path=/api/creditsimulation/**
+        - id: user-registration-service
+          uri: lb://user-registration-service
+          predicates:
+            - Path=/api/register/**
+      discovery:
+        locator:
+          enabled: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/

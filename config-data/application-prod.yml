@@ -1,0 +1,14 @@
+server:
+  port: 8080
+
+spring:
+  profiles: prod
+  datasource:
+    url: jdbc:postgresql://prod-db-server:5432/credit_simulation_db
+    username: prod_user
+    password: prod_password
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://prod-eureka-server:8761/eureka/

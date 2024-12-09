@@ -1,6 +1,3 @@
-spring:
-  application:
-    name: credit-simulation-service # Cambia según el microservicio
 
 eureka:
   client:

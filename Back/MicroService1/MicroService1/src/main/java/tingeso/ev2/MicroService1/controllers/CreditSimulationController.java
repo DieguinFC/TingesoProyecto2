@@ -15,14 +15,13 @@ public class CreditSimulationController {
 
     private CreditSimulationService creditSimulationService;
 
-    private UserService userService; // Inyecta el servicio de usuario
+    //private UserService userService; // Inyecta el servicio de usuario
 
     @PostMapping("/simulate")
     public ResponseEntity<?> simulateCredit(@RequestBody CreditSimulationEntity request) {
         // Verifica si el usuario existe
-        if (!userService.userExists(request.getEmail())) {
-            return ResponseEntity.badRequest().body("El correo electrónico no está registrado.");
-        }
+    //    if (!userService.userExists(request.getEmail())) {
+    //        return ResponseEntity.badRequest().body("El correo electrónico no está registrado.");}
 
         // Si el usuario existe, procede con la simulación
         BigDecimal monthlyPayment = creditSimulationService.calculateMonthlyPayment(
