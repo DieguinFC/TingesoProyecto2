@@ -15,6 +15,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    // Endpoint para registrar un usuario
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@RequestBody UserEntity user) {
         try {
@@ -23,5 +24,12 @@ public class UserController {
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
+    }
+
+    // Endpoint para verificar si un usuario existe, será utilizado por Microservicio 3
+    @GetMapping("/users/exists")
+    public ResponseEntity<Boolean> userExists(@RequestParam String email) {
+        boolean exists = userService.userExists(email); // Verifica si el usuario existe en la base de datos
+        return ResponseEntity.ok(exists); // Devuelve true si el usuario existe, false si no
     }
 }

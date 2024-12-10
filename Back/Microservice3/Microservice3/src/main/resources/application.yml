@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: microservice3 # Nombre del microservicio para Eureka
+  datasource:
+    url: jdbc:postgresql://localhost:5432/Banco3 # Cambia 'localhost' si usas Docker o una base remota
+    username: postgres
+    password: admin
+    driver-class-name: org.postgresql.Driver # Asegura que el driver esté especificado
+  jpa:
+    hibernate:
+      ddl-auto: update # Usar 'validate' o 'none' en producción para evitar cambios automáticos
+    show-sql: true # Muestra las consultas SQL en logs
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect # Dialecto para PostgreSQL
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/ # Cambia localhost si el servidor está en otra máquina
+    fetch-registry: true # Habilita sincronización con Eureka
+    register-with-eureka: true # Permite que el microservicio se registre en Eureka
+
+server:
+  port: 8082 # Cambiado para evitar conflictos con otros microservicios
+
+# Configuración adicional
+logging:
+  level:
+    org.springframework: DEBUG # Logueo detallado para ver lo que ocurre durante el desarrollo
