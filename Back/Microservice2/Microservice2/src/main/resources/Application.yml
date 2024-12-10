@@ -4,7 +4,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/Banco # Cambia 'localhost' si usas Docker o una base remota
     username: postgres
-    password: 123456
+    password: admin
     driver-class-name: org.postgresql.Driver # Asegura que el driver esté especificado
   jpa:
     hibernate:
