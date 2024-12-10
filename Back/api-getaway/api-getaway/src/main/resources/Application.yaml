@@ -7,19 +7,21 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: microservice1  # El ID puede ser cualquier nombre único para tu ruta
-          uri: lb://microservice1  # Coincide con el nombre registrado en Eureka
+        - id: microservice1
+          uri: lb://microservice1
           predicates:
-            - Path=/api/creditsimulation/**  # Ruta para el microservicio 1
-        - id: microservice2  # El ID puede ser cualquier nombre único para tu ruta
-          uri: lb://microservice2  # Coincide con el nombre registrado en Eureka
+            - Path=/api/creditsimulation/**
+        - id: microservice2
+          uri: lb://microservice2
           predicates:
-            - Path=/api/register/**  # Ruta para el microservicio 2
+            - Path=/api/register/**
     discovery:
       locator:
-        enabled: true  # Habilita la ubicación automática de rutas en Eureka
+        enabled: true
+    config:
+      enabled: false  # Desactiva la búsqueda de Config Server
 
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/  # Dirección del servidor Eureka
+      defaultZone: http://localhost:8761/eureka/
