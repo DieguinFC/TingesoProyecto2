@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 @CrossOrigin(origins = "*")
 public class CreditSimulationController {
 
+    @Autowired
     private CreditSimulationService creditSimulationService;
 
     //private UserService userService; // Inyecta el servicio de usuario

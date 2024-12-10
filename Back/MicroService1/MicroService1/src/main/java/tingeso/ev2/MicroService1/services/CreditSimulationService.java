@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.List;
 
+@Service
 public class CreditSimulationService {
 
     public BigDecimal calculateMonthlyPayment(BigDecimal loanAmount, float annualInterestRate, int term) {

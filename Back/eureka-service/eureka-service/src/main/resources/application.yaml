@@ -1,16 +1,15 @@
 server:
-  port: 8761 # Puerto donde estará disponible Eureka
+  port: 8761
 
 spring:
   application:
     name: eureka-server
-  cloud:
-    config:
-      import: configserver:http://localhost:8888 # Asegúrate de que esta URL sea la correcta
+  config:
+    import: configserver:http://localhost:8888
 
 eureka:
   client:
-    register-with-eureka: false # El servidor no se registra a sí mismo
-    fetch-registry: false       # No obtiene registros de otros servidores
+    register-with-eureka: false
+    fetch-registry: false
   instance:
     hostname: localhost
