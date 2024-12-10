@@ -1,30 +1,25 @@
 server:
-  port: 8080  # Cambié el puerto del API Gateway a 8081
+  port: 8080  # Puerto donde estará disponible el API Gateway
 
 spring:
   application:
     name: api-gateway
-
   cloud:
     gateway:
       routes:
-        - id: credit-simulation-service
-          uri: lb://credit-simulation-service
+        - id: microservice1  # El ID puede ser cualquier nombre único para tu ruta
+          uri: lb://microservice1  # Coincide con el nombre registrado en Eureka
           predicates:
-            - Path=/api/creditsimulation/**
-        - id: user-registration-service
-          uri: lb://user-registration-service
+            - Path=/api/creditsimulation/**  # Ruta para el microservicio 1
+        - id: microservice2  # El ID puede ser cualquier nombre único para tu ruta
+          uri: lb://microservice2  # Coincide con el nombre registrado en Eureka
           predicates:
-            - Path=/api/register/**
-        - id: new-service
-          uri: lb://new-service
-          predicates:
-            - Path=/api/newservice/**
-      discovery:
-        locator:
-          enabled: true
+            - Path=/api/register/**  # Ruta para el microservicio 2
+    discovery:
+      locator:
+        enabled: true  # Habilita la ubicación automática de rutas en Eureka
 
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/  # Cambié la URL de Eureka a un servidor local
+      defaultZone: http://localhost:8761/eureka/  # Dirección del servidor Eureka
