@@ -13,50 +13,11 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update  # Establece el comportamiento de actualización de la base de datos (puede ser 'none', 'validate', 'update', 'create', etc.)
+      ddl-auto: update  # Establece el comportamiento de actualización de la base de datos
     show-sql: true  # Muestra las consultas SQL en los logs
     properties:
       hibernate.format_sql: true  # Formatea las consultas SQL para que sean legibles
 
-  # Configuración de Eureka para registro en el servidor de servicios
-  eureka:
-    client:
-      service-url:
-        defaultZone: http://localhost:8761/eureka/  # URL del servidor de Eureka (ajustar según la configuración de tu servidor)
-      fetch-registry: true  # Si se debe obtener el registro de servicios
-      register-with-eureka: true  # Si el microservicio se debe registrar en Eureka
-
-  # Configuración para el puerto
-  server:
-    port: 8082  # El puerto en el que se ejecutará el microservicio
-
-  # Configuración para manejar errores personalizados
-  error:
-    include-message: always  # Siempre incluir el mensaje de error en la respuesta
-
-  # Configuración para la seguridad (si estás utilizando autenticación básica o JWT)
-  security:
-    basic:
-      enabled: false  # Deshabilita la autenticación básica si usas otro tipo de autenticación
-
-# Configuración de logging (opcional)
-logging:
-  level:
-    org.springframework: INFO  # Nivel de log para las clases de Spring
-    User.capes.Microservice2: DEBUG  # Nivel de log para el microservicio
-
-# Cualquier otro valor que desees personalizar para tu microservicio 2
-custom:
-  api:
-    key: 'your-api-key'  # Ejemplo de configuración personalizada
-  email-service:
-    smtp-server: 'smtp.example.com'
-    smtp-port: 587
-    smtp-username: 'user@example.com'
-    smtp-password: 'your-smtp-password'
-
-# Configuración de Spring Cloud Config (si es necesario)
-spring:
   cloud:
     config:
       uri: http://localhost:8888  # URI del servidor de Config
