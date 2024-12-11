@@ -3,10 +3,18 @@ kind: ConfigMap
 metadata:
   name: postgres-config-map
   labels:
-    app: ms2
+    app: databases-config
 data:
+  # Configuración para MS2
   DB_HOST_MS2: "postgres-ms2"  # El nombre del contenedor o el servicio de PostgreSQL para MS2
   DB_PORT_MS2: "5432"  # Puerto del servicio de PostgreSQL
   DB_DBNAME_MS2: "Banco"  # Nombre de la base de datos para MS2
-  DB_USER_MS2: "postgres"  # Usuario para la base de datos
-  DB_PASSWORD_MS2: "admin"  # Contraseña para la base de datos
+  DB_USER_MS2: "postgres"  # Usuario para la base de datos MS2
+  DB_PASSWORD_MS2: "admin"  # Contraseña para la base de datos MS2
+
+  # Configuración para MS3
+  DB_HOST_MS3: "postgres-ms3"  # El nombre del contenedor o el servicio de PostgreSQL para MS3
+  DB_PORT_MS3: "5432"  # Puerto del servicio de PostgreSQL
+  DB_DBNAME_MS3: "Banco3"  # Nombre de la base de datos para MS3
+  DB_USER_MS3: "postgres"  # Usuario para la base de datos MS3
+  DB_PASSWORD_MS3: "admin"  # Contraseña para la base de datos MS3

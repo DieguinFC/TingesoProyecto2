@@ -61,4 +61,4 @@ spec:
     - protocol: TCP
       port: 8082  # Puerto del servicio
       targetPort: 8082  # Puerto dentro del contenedor
-  type: ClusterIP  # Tipo de servicio, se puede cambiar a NodePort si es necesario
+  type: LoadBalancer  # Tipo de servicio, se puede cambiar a NodePort si es necesario

@@ -19,7 +19,7 @@ spec:
           image: shezy1/api-gateway:latest  # Usa la imagen que generaste para el API Gateway
           ports:
             - containerPort: 8080  # El puerto donde se expone el API Gateway
-          environment:
+          env:  # Cambié "environment" por "env"
             - name: SPRING_PROFILES_ACTIVE
               value: "default"  # Perfil activo del gateway, puede ajustarse si es necesario
             - name: EUREKA_SERVER

@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deployment
+  labels:
+    app: frontend-deployment
+spec:
+  selector:
+    matchLabels:
+      app: frontend-deployment
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: frontend-deployment
+    spec:
+      containers:
+        - name: frontend
+          image: shezy1/frontend:latest  # Imagen de tu frontend que subiste a Docker Hub
+          ports:
+            - containerPort: 80  # El puerto en el contenedor donde el frontend está escuchando
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service  # Cambié el nombre del servicio para evitar conflictos
+  labels:
+    app: frontend-deployment
+spec:
+  selector:
+    app: frontend-deployment  # Asegúrate de que el selector coincida con el label del deployment
+  ports:
+    - protocol: TCP
+      port: 80  # Puerto expuesto por el servicio
+      targetPort: 80  # Puerto en el contenedor
+  type: LoadBalancer  # Tipo de servicio, puedes cambiarlo a ClusterIP si no necesitas acceso externo

@@ -19,7 +19,7 @@ spec:
           image: shezy1/microservice1:latest  # Usa la imagen que generaste para microservice1
           ports:
             - containerPort: 8081  # El puerto donde escucha el microservicio
-          environment:
+          env:  # Cambié "environment" por "env"
             - name: SPRING_PROFILES_ACTIVE
               value: "default"  # Perfil activo, ajústalo si es necesario
             - name: EUREKA_SERVER

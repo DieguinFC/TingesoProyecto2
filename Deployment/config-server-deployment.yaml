@@ -5,10 +5,10 @@ metadata:
   labels:
     app: config-server
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: config-server
-  replicas: 1
   template:
     metadata:
       labels:
@@ -19,7 +19,7 @@ spec:
           image: shezy1/config-server:latest  # Usa la imagen que creaste para el config-server
           ports:
             - containerPort: 8888  # Puerto donde está expuesto el Config Server
-          environment:
+          env:  # Cambié "environment" por "env"
             - name: SPRING_PROFILES_ACTIVE
               value: "native"  # Define el perfil activo (puedes ajustarlo según lo necesites)
 ---
