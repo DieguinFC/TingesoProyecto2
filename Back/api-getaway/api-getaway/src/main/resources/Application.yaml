@@ -1,29 +1,9 @@
-server:
-  port: 8080  # Puerto donde estará disponible el API Gateway
-
-spring:
-  application:
-    name: api-gateway
-  main:
-    web-application-type: reactive
-  cloud:
-    gateway:
-      routes:
-        - id: microservice1
-          uri: lb://microservice1
-          predicates:
-            - Path=/api/creditsimulation/**
-        - id: microservice2
-          uri: lb://microservice2
-          predicates:
-            - Path=/api/register/**
-    discovery:
-      locator:
-        enabled: true
-    config:
-      enabled: false  # Desactiva la búsqueda de Config Server
-
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://localhost:8761/eureka
+
+spring:
+  cloud:
+    config:
+      uri: http://localhost:8888

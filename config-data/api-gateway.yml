@@ -1,24 +1,16 @@
 server:
-  port: 8080  # Puerto donde estará disponible el API Gateway
-
-eureka:
-  client:
-    fetch-registry: true
-    register-with-eureka: true
-    service-url:
-      defaultZone: http://eureka-server:8761/eureka  # Dirección del servidor Eureka donde los servicios están registrados
-  instance:
-    prefer-ip-address: true  # Para usar direcciones IP en lugar de nombres de host
-    instance-id: ${spring.application.name}:${spring.application.instance-id:${random.value}}  # Genera un ID único para la instancia
+  port: 8080
 
 spring:
   application:
-    name: api-gateway  # Nombre de la aplicación (API Gateway)
+    name: api-gateway
+  main:
+    web-application-type: reactive
   cloud:
     gateway:
       discovery:
         locator:
-          enabled: true  # Habilita la detección automática de rutas registradas en Eureka
+          enabled: true
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE
       globalcors:
@@ -30,14 +22,24 @@ spring:
             allow-credentials: true
       routes:
         - id: microservice1
-          uri: lb://microservice1  # Nombre lógico registrado en Eureka para MS1
+          uri: lb://microservice1
           predicates:
-            - Path=/api/creditsimulation/**  # Redirige todas las rutas que inician con /api/creditsimulation/
+            - Path=/api/creditsimulation/**
         - id: microservice2
-          uri: lb://microservice2  # Nombre lógico registrado en Eureka para MS2
+          uri: lb://microservice2
           predicates:
-            - Path=/api/users/**  # Redirige todas las rutas que inician con /api/users/
+            - Path=/api/users/**
         - id: microservice3
-          uri: lb://microservice3  # Nombre lógico registrado en Eureka para MS3
+          uri: lb://microservice3
           predicates:
-            - Path=/api/credit-request/**  # Redirige todas las rutas que inician con /api/credit-request/
+            - Path=/api/credit-request/**
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${spring.application.instance-id:${random.value}}

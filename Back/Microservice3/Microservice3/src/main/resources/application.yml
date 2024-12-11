@@ -22,7 +22,7 @@ eureka:
     register-with-eureka: true # Permite que el microservicio se registre en Eureka
 
 server:
-  port: 8082 # Cambiado para evitar conflictos con otros microservicios
+  port: 8083 # Cambiado para evitar conflictos con otros microservicios
 
 # Configuración adicional
 logging:
