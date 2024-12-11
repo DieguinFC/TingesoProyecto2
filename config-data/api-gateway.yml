@@ -28,7 +28,7 @@ spring:
         - id: microservice2
           uri: lb://microservice2
           predicates:
-            - Path=/api/users/**
+            - Path=/api/register/**
         - id: microservice3
           uri: lb://microservice3
           predicates:
