@@ -3,7 +3,6 @@ package capas.servicios;
 import capas.entidades.CreditRequestEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import capas.entidades.CreditRequestEntity;
 import capas.repos.CreditRepository;
 
 import java.util.List;

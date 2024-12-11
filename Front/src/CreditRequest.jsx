@@ -25,8 +25,8 @@ function CreditRegistration() {
     e.preventDefault();
 
     try {
-      // Enviar la solicitud de crédito
-      const response = await axios.post('/api/credit-request', {
+      // Enviar la solicitud de crédito a través del Gateway
+      const response = await axios.post('http://localhost:8080/api/credit-request', {
         requestedAmount: loanAmount,
         termInYears: term,
         creditType: { id: Number(creditTypeId) },
@@ -34,21 +34,21 @@ function CreditRegistration() {
         income,
       });
 
-      // Verificar que la respuesta sea un string
-      if (typeof response.data === 'string') {
-        setMessage(response.data); // Si la respuesta es un string, usarlo directamente
+      // Manejo del mensaje de respuesta
+      if (response.data && typeof response.data === 'string') {
+        setMessage(response.data); // Si es un mensaje simple
       } else if (response.data && response.data.message) {
-        setMessage(response.data.message); // Si es un objeto, mostrar el mensaje contenido
+        setMessage(response.data.message); // Si hay un mensaje en el objeto JSON
       } else {
-        setMessage('Solicitud de crédito realizada con éxito.'); // Mensaje por defecto en caso de éxito
+        setMessage('Solicitud de crédito realizada con éxito.');
       }
     } catch (error) {
       // Manejo de errores
       if (error.response && error.response.status === 400) {
-        setMessage(error.response.data); // Establecer mensaje de error del backend
+        setMessage(error.response.data);
       } else {
-        console.error('Error al realizar el registro:', error);
-        setMessage('Hubo un error al realizar el registro.'); // Mensaje genérico
+        console.error('Error al realizar la solicitud:', error);
+        setMessage('Hubo un error al realizar la solicitud.');
       }
     }
   };
@@ -57,7 +57,6 @@ function CreditRegistration() {
     <div className="credit-request-container">
       <h2>Registro y Solicitud de Crédito</h2>
       <form onSubmit={handleSubmit}>
-        
         <div className="credit-request-group">
           <input
             className="credit-request-input"
@@ -68,7 +67,7 @@ function CreditRegistration() {
             required
           />
         </div>
-  
+
         <div className="credit-request-group">
           <input
             className="credit-request-input"
@@ -79,7 +78,7 @@ function CreditRegistration() {
             required
           />
         </div>
-  
+
         {/* Datos del Crédito */}
         <div className="credit-request-group">
           <input
@@ -91,7 +90,7 @@ function CreditRegistration() {
             required
           />
         </div>
-  
+
         <div className="credit-request-group">
           <input
             className="credit-request-input"
@@ -102,17 +101,17 @@ function CreditRegistration() {
             required
           />
         </div>
-  
+
         <div className="credit-request-group">
           <select
             className="credit-request-input"
-            value={creditTypeId} // Cambiar a creditTypeId
-            onChange={(e) => setCreditTypeId(e.target.value)} // Cambiar a setCreditTypeId
+            value={creditTypeId}
+            onChange={(e) => setCreditTypeId(e.target.value)}
             required
           >
             <option value="">Seleccione un tipo de crédito</option>
             {creditTypes.map((type) => (
-              <option key={type.id} value={type.id}> {/* Cambiar a type.id */}
+              <option key={type.id} value={type.id}>
                 {type.name}
               </option>
             ))}
@@ -124,7 +123,6 @@ function CreditRegistration() {
         </button>
       </form>
 
-      {/* Aquí se muestra el mensaje de éxito o error */}
       {message && <p className="credit-registration-message">{message}</p>}
     </div>
   );

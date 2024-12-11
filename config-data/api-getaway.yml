@@ -3,25 +3,39 @@ server:
 
 spring:
   application:
-    name: api-gateway
+    name: api-gateway  # Nombre de la aplicación (API Gateway)
   cloud:
     gateway:
       routes:
+        # Rutas para los microservicios
         - id: microservice1
-          uri: lb://microservice1
+          uri: lb://microservice1  # Nombre lógico registrado en Eureka para MS1
           predicates:
-            - Path=/api/creditsimulation/**
+            - Path=/api/creditsimulation/**  # Redirige todas las rutas que inician con /api/creditsimulation/
+
         - id: microservice2
-          uri: lb://microservice2
+          uri: lb://microservice2  # Nombre lógico registrado en Eureka para MS2
           predicates:
-            - Path=/api/register/**
-    discovery:
-      locator:
-        enabled: true
+            - Path=/api/users/**  # Redirige todas las rutas que inician con /api/users/
+
+        - id: microservice3
+          uri: lb://microservice3  # Nombre lógico registrado en Eureka para MS3
+          predicates:
+            - Path=/api/credit-request/**  # Redirige todas las rutas que inician con /api/credit-request/
+
+      discovery:
+        locator:
+          enabled: true  # Habilita la detección automática de rutas registradas en Eureka
+        routes:  # Opcional si quieres manejar las rutas con discovery
+          include-expression: true  # Incluir todas las rutas descubiertas automáticamente
+
     config:
-      enabled: false  # Desactiva la búsqueda de Config Server
+      enabled: false  # Desactiva la búsqueda de configuración desde Config Server (opcional si usas Config Server)
 
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://localhost:8761/eureka/  # Dirección del servidor Eureka donde los servicios están registrados
+  instance:
+    prefer-ip-address: true  # Para usar direcciones IP en lugar de nombres de host
+    instance-id: ${spring.application.name}:${spring.application.instance-id:${random.value}}

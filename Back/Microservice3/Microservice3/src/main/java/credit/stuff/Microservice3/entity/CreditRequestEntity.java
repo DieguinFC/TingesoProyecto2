@@ -29,4 +29,7 @@ public class CreditRequestEntity {
     @ManyToOne
     @JoinColumn(name = "credit_type_id", nullable = false) // Nombre de la columna en la tabla credit_requests
     private CreditType creditType; // Referencia al tipo de crédito
+
+    @Transient
+    private Long creditTypeId; // Para recibir solo el ID del tipo de crédito
 }

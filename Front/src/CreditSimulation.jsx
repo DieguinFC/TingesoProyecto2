@@ -7,33 +7,45 @@ function CreditSimulation() {
   const [loanAmount, setLoanAmount] = useState('');
   const [annualInterestRate, setAnnualInterestRate] = useState('');
   const [term, setTerm] = useState('');
-  const [email, setEmail] = useState(''); // Nuevo estado para el correo electrónico
-  const [monthlyPayment, setMonthlyPayment] = useState(null); // Estado para almacenar el resultado
-  const [errorMessage, setErrorMessage] = useState(''); // Estado para almacenar el mensaje de error
+  const [email, setEmail] = useState('');
+  const [monthlyPayment, setMonthlyPayment] = useState(null);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleSimulate = async (e) => {
     e.preventDefault();
     setErrorMessage(''); // Limpiar mensaje de error antes de una nueva solicitud
 
+    // Validación en el cliente
+    if (loanAmount <= 0 || annualInterestRate <= 0 || term <= 0) {
+      setErrorMessage('Todos los valores deben ser positivos.');
+      return;
+    }
+
     try {
-      // Envía la solicitud al backend con los datos de simulación
-      const response = await axios.post('/api/creditsimulation/simulate', {
+      // Envía la solicitud al API Gateway
+      const response = await axios.post('http://localhost:8080/api/creditsimulation/simulate', {
         loanAmount: parseFloat(loanAmount),
         annualInterestRate: parseFloat(annualInterestRate),
         term: parseInt(term, 10),
-        email // Incluir el correo electrónico en la solicitud
+        email,
       });
 
       // Almacena el resultado en el estado
       setMonthlyPayment(response.data);
     } catch (error) {
-      // Maneja el error aquí
-      if (error.response && error.response.status === 400) {
-        // Si el error es 400, significa que el correo no existe
-        setErrorMessage(error.response.data); // Establecer mensaje de error del backend
+      // Manejo de errores
+      if (error.response) {
+        const { status, data } = error.response;
+        if (status === 400) {
+          setErrorMessage(data); // Error del backend
+        } else if (status === 404) {
+          setErrorMessage('Servicio no encontrado.');
+        } else {
+          setErrorMessage('Error interno del servidor.');
+        }
       } else {
         console.error('Error al realizar la simulación:', error);
-        setErrorMessage('Hubo un error al realizar la simulación.'); // Mensaje genérico
+        setErrorMessage('Error de red. Verifica tu conexión.');
       }
     }
   };
@@ -43,9 +55,9 @@ function CreditSimulation() {
       <h2 className="credit-simulation-title">Simulación de Crédito Hipotecario</h2>
       <form onSubmit={handleSimulate}>
         <input
-          type="email" // Cambiar tipo a "email"
+          type="email"
           className="credit-simulation-input"
-          placeholder='Correo Electrónico'
+          placeholder="Correo Electrónico"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -53,7 +65,7 @@ function CreditSimulation() {
         <input
           type="number"
           className="credit-simulation-input"
-          placeholder='Monto del Préstamo'
+          placeholder="Monto del Préstamo"
           value={loanAmount}
           onChange={(e) => setLoanAmount(e.target.value)}
           required
@@ -62,7 +74,7 @@ function CreditSimulation() {
           type="number"
           step="0.01"
           className="credit-simulation-input"
-          placeholder='Tasa de Interés Anual (%)'
+          placeholder="Tasa de Interés Anual (%)"
           value={annualInterestRate}
           onChange={(e) => setAnnualInterestRate(e.target.value)}
           required
@@ -70,7 +82,7 @@ function CreditSimulation() {
         <input
           type="number"
           className="credit-simulation-input"
-          placeholder='Plazo en años'
+          placeholder="Plazo en años"
           value={term}
           onChange={(e) => setTerm(e.target.value)}
           required
