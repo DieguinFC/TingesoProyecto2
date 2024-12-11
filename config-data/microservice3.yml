@@ -1,3 +1,6 @@
+server:
+  port: 8083
+
 spring:
   application:
     name: microservice3 # Nombre del microservicio, usado para identificar su configuración
