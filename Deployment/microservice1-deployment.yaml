@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: microservice1-deployment
+  labels:
+    app: microservice1
+spec:
+  selector:
+    matchLabels:
+      app: microservice1
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: microservice1
+    spec:
+      containers:
+        - name: microservice1
+          image: shezy1/microservice1:latest  # Usa la imagen que generaste para microservice1
+          ports:
+            - containerPort: 8081  # El puerto donde escucha el microservicio
+          environment:
+            - name: SPRING_PROFILES_ACTIVE
+              value: "default"  # Perfil activo, ajústalo si es necesario
+            - name: EUREKA_SERVER
+              value: "http://eureka-server-service:8761/eureka"  # URL del servidor Eureka
+            - name: CONFIG_SERVER
+              value: "http://config-server-service:8888"  # URL del Config Server
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: microservice1-service
+  labels:
+    app: microservice1
+spec:
+  selector:
+    app: microservice1  # Asegúrate de que el selector coincida con el label del deployment
+  ports:
+    - protocol: TCP
+      port: 8081  # El puerto expuesto por el servicio
+      targetPort: 8081  # Puerto en el contenedor
+  type: ClusterIP  # Tipo de servicio, por defecto es ClusterIP

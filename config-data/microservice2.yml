@@ -1,14 +1,14 @@
 server:
-  port: 8082
+  port: ${PORT:8082}  # Puerto en el que se ejecutará el microservicio
 
 spring:
   application:
     name: microservice2  # Nombre del microservicio
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/Banco  # URL de la base de datos
-    username: postgres  # Usuario para la base de datos
-    password: admin  # Contraseña para la base de datos
+    url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}  # URL de la base de datos
+    username: ${DB_USER}  # Usuario para la base de datos
+    password: ${DB_PASSWORD}  # Contraseña para la base de datos
     driver-class-name: org.postgresql.Driver
     hikari:
       maximum-pool-size: 10  # Tamaño máximo del pool de conexiones

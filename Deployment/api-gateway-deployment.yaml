@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-gateway-deployment
+  labels:
+    app: api-gateway
+spec:
+  selector:
+    matchLabels:
+      app: api-gateway
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: api-gateway
+    spec:
+      containers:
+        - name: api-gateway
+          image: shezy1/api-gateway:latest  # Usa la imagen que generaste para el API Gateway
+          ports:
+            - containerPort: 8080  # El puerto donde se expone el API Gateway
+          environment:
+            - name: SPRING_PROFILES_ACTIVE
+              value: "default"  # Perfil activo del gateway, puede ajustarse si es necesario
+            - name: EUREKA_SERVER
+              value: "http://eureka-server-service:8761/eureka"  # URL del servidor Eureka (nombre del servicio)
+            - name: EUREKA_PORT
+              value: "8761"  # Puerto del servidor Eureka
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-gateway-service
+  labels:
+    app: api-gateway
+spec:
+  selector:
+    app: api-gateway  # Asegúrate de que el selector coincida con el label del deployment
+  ports:
+    - protocol: TCP
+      port: 8080  # El puerto expuesto por el servicio
+      targetPort: 8080  # Puerto que escucha el contenedor
+  type: LoadBalancer  # Tipo de servicio, puede ser ClusterIP, NodePort o LoadBalancer

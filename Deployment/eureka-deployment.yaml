@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eureka-server-deployment
+  labels:
+    app: eureka-server
+spec:
+  selector:
+    matchLabels:
+      app: eureka-server
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: eureka-server
+    spec:
+      containers:
+        - name: eureka-server
+          image: my-eureka-server:latest  # Usa la imagen que creaste para el Eureka Server
+          ports:
+            - containerPort: 8761  # Puerto donde está expuesto el Eureka Server
+          environment:
+            - name: EUREKA_SERVER
+              value: "true"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: eureka-server-service
+  labels:
+    app: eureka-server
+spec:
+  selector:
+    app: eureka-server  # Asegúrate de que el selector coincida con el label del deployment
+  ports:
+    - protocol: TCP
+      port: 8761  # Puerto expuesto por el servicio
+      targetPort: 8761  # Puerto que escucha el contenedor
+  type: LoadBalancer  # Tipo de servicio, puede ser ClusterIP, NodePort, o LoadBalancer

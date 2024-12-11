@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config-server-deployment
+  labels:
+    app: config-server
+spec:
+  selector:
+    matchLabels:
+      app: config-server
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: config-server
+    spec:
+      containers:
+        - name: config-server
+          image: shezy1/config-server:latest  # Usa la imagen que creaste para el config-server
+          ports:
+            - containerPort: 8888  # Puerto donde está expuesto el Config Server
+          environment:
+            - name: SPRING_PROFILES_ACTIVE
+              value: "native"  # Define el perfil activo (puedes ajustarlo según lo necesites)
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: config-server-service
+  labels:
+    app: config-server
+spec:
+  selector:
+    app: config-server  # Asegúrate de que el selector coincida con el label del deployment
+  ports:
+    - protocol: TCP
+      port: 8888  # Puerto expuesto por el servicio
+      targetPort: 8888  # Puerto que escucha el contenedor
+  type: LoadBalancer  # Tipo de servicio, puede ser ClusterIP, NodePort, o LoadBalancer
