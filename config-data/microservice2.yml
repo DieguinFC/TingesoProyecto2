@@ -23,6 +23,13 @@ spring:
 
   cloud:
     config:
-      uri: http://localhost:8888  # URI del servidor de Config
+      uri: http://config-service:8888  # Cambiado a "config-service" para Kubernetes
       name: microservice2  # Nombre del microservicio que se registrará en el servidor Config
       profile: default  # El perfil predeterminado para la configuración
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-service:8761/eureka/  # Cambiado a "eureka-service" para Kubernetes
+  instance:
+    prefer-ip-address: true

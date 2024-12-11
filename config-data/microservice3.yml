@@ -1,31 +1,31 @@
 server:
-  port: ${PORT:8083}
+  port: ${PORT:8083}  # Puerto en el que se ejecutará el microservicio
 
 spring:
   application:
-    name: microservice3 # Nombre del microservicio, usado para identificar su configuración
-    cloud:
-      config:
-        uri: http://localhost:8888  # URI del servidor de Config
-        profile: default  # El perfil predeterminado para la configuración
+    name: microservice3  # Nombre del microservicio
+
+  cloud:
+    config:
+      uri: http://config-service:8888  # Cambiado a "config-service" para Kubernetes
+      profile: default  # El perfil predeterminado para la configuración
 
   datasource:
     url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}  # URL de la base de datos
     username: ${DB_USER}  # Usuario para la base de datos
     password: ${DB_PASSWORD}  # Contraseña para la base de datos
     driver-class-name: org.postgresql.Driver
+
   jpa:
     hibernate:
-      ddl-auto: update # Define si se deben crear/modificar tablas automáticamente
-    show-sql: true # Muestra las consultas SQL en los logs
+      ddl-auto: update  # Define si se deben crear/modificar tablas automáticamente
+    show-sql: true  # Muestra las consultas SQL en los logs
 
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/ # URL del servidor Eureka
+      defaultZone: http://eureka-service:8761/eureka/  # Cambiado a "eureka-service" para Kubernetes
 
-# Si necesitas otras configuraciones, puedes agregarlas aquí
 logging:
   level:
-    org.springframework: DEBUG # Nivel de logging, útil para depuración en desarrollo
-
+    org.springframework: DEBUG  # Nivel de logging, útil para depuración en desarrollo

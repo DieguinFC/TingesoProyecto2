@@ -1,0 +1,92 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: ms3-db-pv
+  labels:
+    type: local
+spec:
+  storageClassName: standard
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/data/ms3-db-data"  # Ruta en el host donde se almacenará el volumen
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ms3-db-pvc
+  labels:
+    app: ms3-postgres
+    tier: database
+spec:
+  storageClassName: standard
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms3-db-deployment
+  labels:
+    app: ms3-db-deployment
+    tier: database
+spec:
+  selector:
+    matchLabels:
+      app: ms3-db-deployment
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: ms3-db-deployment
+        tier: database
+    spec:
+      containers:
+        - name: ms3-db
+          image: postgres:latest  # Imagen de PostgreSQL
+          imagePullPolicy: "IfNotPresent"
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config-map  # Referencia al ConfigMap
+                  key: DB_USER_MS3  # Usuario de la base de datos
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config-map  # Referencia al ConfigMap
+                  key: DB_PASSWORD_MS3  # Contraseña de la base de datos
+            - name: POSTGRES_DB
+              value: "ms3_db"  # Nombre de la base de datos
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: ms3-db-data  # Volumen montado
+      volumes:
+        - name: ms3-db-data
+          persistentVolumeClaim:
+            claimName: ms3-db-pvc  # Referencia al PVC
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms3-db-service
+  labels:
+    app: ms3-db-service
+    tier: database
+spec:
+  ports:
+    - port: 5432
+      targetPort: 5432
+      protocol: TCP
+  selector:
+    app: ms3-db-deployment
+    tier: database
+  type: LoadBalancer  # Cambiar a LoadBalancer si lo necesitas externamente

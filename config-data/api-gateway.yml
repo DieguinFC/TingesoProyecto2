@@ -22,15 +22,15 @@ spring:
             allow-credentials: true
       routes:
         - id: microservice1
-          uri: lb://microservice1
+          uri: http://ms1-service:8081 # Cambia "lb://microservice1" por el nombre del servicio Kubernetes
           predicates:
             - Path=/api/creditsimulation/**
         - id: microservice2
-          uri: lb://microservice2
+          uri: http://ms2-service:8082 # Cambia "lb://microservice2" por el nombre del servicio Kubernetes
           predicates:
             - Path=/api/register/**
         - id: microservice3
-          uri: lb://microservice3
+          uri: http://ms3-service:8083 # Cambia "lb://microservice3" por el nombre del servicio Kubernetes
           predicates:
             - Path=/api/credit-request/**
 
@@ -39,7 +39,7 @@ eureka:
     fetch-registry: true
     register-with-eureka: true
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://eureka-service:8761/eureka # Cambia "localhost" por el nombre del servicio Kubernetes de Eureka
   instance:
     prefer-ip-address: true
     instance-id: ${spring.application.name}:${spring.application.instance-id:${random.value}}

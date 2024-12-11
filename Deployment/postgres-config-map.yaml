@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-config-map
+  labels:
+    app: ms2
+data:
+  DB_HOST_MS2: "postgres-ms2"  # El nombre del contenedor o el servicio de PostgreSQL para MS2
+  DB_PORT_MS2: "5432"  # Puerto del servicio de PostgreSQL
+  DB_DBNAME_MS2: "Banco"  # Nombre de la base de datos para MS2
+  DB_USER_MS2: "postgres"  # Usuario para la base de datos
+  DB_PASSWORD_MS2: "admin"  # Contraseña para la base de datos
