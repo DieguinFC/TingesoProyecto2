@@ -1,41 +1,43 @@
 server:
   port: 8080  # Puerto donde estará disponible el API Gateway
 
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka  # Dirección del servidor Eureka donde los servicios están registrados
+  instance:
+    prefer-ip-address: true  # Para usar direcciones IP en lugar de nombres de host
+    instance-id: ${spring.application.name}:${spring.application.instance-id:${random.value}}  # Genera un ID único para la instancia
+
 spring:
   application:
     name: api-gateway  # Nombre de la aplicación (API Gateway)
   cloud:
     gateway:
+      discovery:
+        locator:
+          enabled: true  # Habilita la detección automática de rutas registradas en Eureka
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowed-origin-patterns: '*'
+            allowed-methods: "*"
+            allowed-headers: "*"
+            allow-credentials: true
       routes:
-        # Rutas para los microservicios
         - id: microservice1
           uri: lb://microservice1  # Nombre lógico registrado en Eureka para MS1
           predicates:
             - Path=/api/creditsimulation/**  # Redirige todas las rutas que inician con /api/creditsimulation/
-
         - id: microservice2
           uri: lb://microservice2  # Nombre lógico registrado en Eureka para MS2
           predicates:
             - Path=/api/users/**  # Redirige todas las rutas que inician con /api/users/
-
         - id: microservice3
           uri: lb://microservice3  # Nombre lógico registrado en Eureka para MS3
           predicates:
             - Path=/api/credit-request/**  # Redirige todas las rutas que inician con /api/credit-request/
-
-      discovery:
-        locator:
-          enabled: true  # Habilita la detección automática de rutas registradas en Eureka
-        routes:  # Opcional si quieres manejar las rutas con discovery
-          include-expression: true  # Incluir todas las rutas descubiertas automáticamente
-
-    config:
-      enabled: false  # Desactiva la búsqueda de configuración desde Config Server (opcional si usas Config Server)
-
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka/  # Dirección del servidor Eureka donde los servicios están registrados
-  instance:
-    prefer-ip-address: true  # Para usar direcciones IP en lugar de nombres de host
-    instance-id: ${spring.application.name}:${spring.application.instance-id:${random.value}}  # Genera un ID único para la instancia
