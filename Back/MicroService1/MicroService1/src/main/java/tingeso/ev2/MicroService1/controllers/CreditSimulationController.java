@@ -11,7 +11,6 @@ import java.math.BigDecimal;
 
 @RestController
 @RequestMapping("/api/creditsimulation")
-@CrossOrigin(origins = "http://localhost:5173", allowedHeaders = "*", allowCredentials = "true")
 
 public class CreditSimulationController {
 
